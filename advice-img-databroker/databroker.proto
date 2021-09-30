@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+message Image {
+    bytes image_data = 1;
+}
+
+message Empty {
+}
+
+service ImageSource {
+   rpc Get (Empty) returns (Image);
+}

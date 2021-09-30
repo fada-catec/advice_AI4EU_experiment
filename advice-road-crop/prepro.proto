@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+message Image {
+    bytes image_data = 1;
+}
+
+service ImagePreProcess {
+   rpc RoadCrop (Image) returns (Image);
+}
