@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Label Assistant Tool</title>
+  <meta charset="utf-8">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+  <script type='text/javascript' src='http://davidlynch.org/projects/maphilight/jquery.maphilight.js'></script>
+  <script src="gui.js"></script>
+  <link rel="stylesheet" href="gui.css" />
+  <link rel="shortcut icon" href="#">
+  <link rel="icon" href="https://raw.githubusercontent.com/fada-catec/advice_AI4EU_experiment/main/imgs/ai.ico">
+  </head>
+
+  <body>
+    <div id="heading" width="100%">
+      <table width="100%">
+        <tr>
+          <td>
+            <a id="heading_logo" class="1" target="_" href="https://ai4europe.eu">
+              <img src="https://raw.githubusercontent.com/fada-catec/advice_AI4EU_experiment/main/imgs/logo_ai4eu.png" alt="AI4EU">
+            </a>
+          </td>
+          <td>
+            <div id="heading">Labeling Assistant Tool</div>
+            <div id="heading_h2">ADVICE: AI-baseD predictiVe road maIntenanCE</div>
+          </td>
+          <td>
+            <a id="heading_logo" target="_" href="https://www.catec.aero/es/">
+              <img src="https://raw.githubusercontent.com/fada-catec/advice_AI4EU_experiment/main/imgs/CATECCompleto.jpg" alt="FADA-CATEC">
+            </a>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+  <div id="menu">
+      <table>
+        <tr>
+          <td>
+            <a style="text-decoration:none" href="/"><button id = "story" type="button">Story</button></a>
+          </td>
+          <td>
+            <a style="text-decoration:none" href="tool.html"><button id = "tool" type="button">Labeling Assistant Tool</button></a>
+          </td>
+          <td>
+            <a style="text-decoration:none" href="contact.html"><button id = "contact" type="button">Contact us</button></a>
+          </td>
+        </tr>
+      </table>
+  </div>
+  <div id="Contact_content">
+    <table>
+      <tr>
+        <td>
+          <a id="Contact_logo" target="_" href="http://www.catec.aero/es/">
+            <img src="https://raw.githubusercontent.com/fada-catec/advice_AI4EU_experiment/main/imgs/CATECCompleto.jpg" alt="CATEC">
+          </a>
+        </td>
+        <td>
+          <table>
+            <tr>
+              <p>Web Page: <a id="Contact_logo" target="_"
+                  href="http://www.catec.aero/en/">https://www.catec.aero/en/</a></p>
+            </tr>
+            <tr>
+              <p>Email: <a id="Contact_logo" target="_blank"
+                  href="mailto:unidad-ayr@catec.aero">unidad-ayr@catec.aero</a></p>
+            </tr>
+            <tr>
+              <p>Link to Repo: <a id="Contact_logo" target="_"
+                  href="https://github.com/fada-catec/advice_AI4EU_experiment">Github</a></p>
+            </tr>
+            <tr>
+              <p>Contact CATEC: <a id="Contact_logo" target="_" href="http://www.catec.aero/en/contact-us">Contact
+                  Form</a></p>
+            </tr>
+        </td>
+    </table>
+    </tr>
+    </table>
+  </div>
+  <div id="footing">
+    <hr>
+    <hr>
+    <p>Supported by AI4EU - A European AI On Demand Platform and Ecosystem. More information: <a
+        href="https://www.ai4europe.eu">ai4europe.eu</a></p>
+    <table>
+      <tr>
+        <td>
+          <img id="EULogo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/Flag_of_Europe.svg/200px-Flag_of_Europe.svg.png"
+            alt="EULogo">
+        </td>
+        <td>
+          <p>This project has received funding from the European Union's Horizon 2020</p>
+          <p>research and innovation programme under grant agreement 825619.</p>
+        </td>
+    </table>
+  </div>
+</body>
+
+</html>

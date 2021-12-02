@@ -11,7 +11,7 @@ ADVICE: AI-baseD predictiVe road maIntenanCE
 Supported by AI4EU - A European AI On Demand Platform and Ecosystem.  
 More information: <a href="https://www.ai4europe.eu/">ai4europe.eu</a>
 
-<img src="https://europa.eu/european-union/sites/default/files/docs/body/flag_yellow_high.jpg" 
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/Flag_of_Europe.svg/200px-Flag_of_Europe.svg.png" 
      alt="eu_flag" height="45" align="left" >  
 
 This project has received funding from the European Union's Horizon 2020  

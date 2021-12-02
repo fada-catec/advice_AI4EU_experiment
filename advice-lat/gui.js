@@ -13,7 +13,7 @@ function start(){
   $('<td id = "td_instructions"><button id = "instructions_bt" onclick="show()" type="button">Show instructions</button></td>').appendTo($tr_menu)
 
   $legend = document.getElementById("legend");
-  $('<div class="legend-title">Different classes</div><div class="legend-scale"><ul class="legend-labels"><li><span style="background:#008080;"></span>Cracking</li><li><span style="background:#800000;"></span>Rutting</li><li><span style="background:#008000;"></span>Pothole</li><li><span style=background:#808000;"></span>ManholeCover</li><li><span style="background:#800080;"></span>EdgeDeterioration</li><li><span style="background:#000080;"></span>Gully</li><li><span style="background:#000000;"></span>Unknown</li></ul>').appendTo($legend)
+  $('<div class="legend-title">Legend</div><div class="legend-scale"><ul class="legend-labels"><li><span style="background:#cfcf38;"></span>KerbDeterioration</li><li><span style="background:#fa3253;"></span>Rutting</li><li><span style="background:#b83df5;"></span>Pothole</li><li><span style=background:#b25050;"></span>ManholeCover</li><li><span style="background:#21a84d;"></span>EdgeDeterioration</li><li><span style="background:#2a7dd1;"></span>Gully</li><li><span style="background:#000000;"></span>LooseStones</li></lu><br><lu><li><span style="background:#3d3df5;"></span>DefectiveSurfaceDressing</li><li><span style="background:#33e6ff;"></span>JointDefectiveness</li><li><span style="background:#ffcc33;"></span>ReflectionCracking</li><li><span style="background:#ff00cc;"></span>Settlement</li><li><span style="background:#aeb8b6;"></span>SurfaceDeterioration</li></ul>').appendTo($legend)
 
 
   saved_flag = true
@@ -64,7 +64,7 @@ function nextImage(){
           document.getElementById('orig_map').remove()
         }
 
-        $('<table id="content"><tr><th>Predicted image</th><th>Original image</th></tr><tr><td><img class="map" id="det_img" src="'+img_path+'" alt="Predicted image" usemap="#predicted_label"></td><td><img class="map" id="orig_img" src="'+img_path+'" alt="Original image" usemap="#original_label"></td><td id=instructionPopUp></td></tr></table>').appendTo('body');
+        $('<table id="content"><tr><th>Predicted image</th><th>Original image</th></tr><tr><td><img class="map" id="det_img" src="'+img_path+'" alt="Predicted image" usemap="#predicted_label"></td><td><img class="map" id="orig_img" src="'+img_path+'" alt="Original image" usemap="#original_label"></td></tr></table>').appendTo('body');
 
         var $map = $('<map id="det_map" name="predicted_label">').appendTo('body');
         for (i=0;i<detection_labels.length;i++) {
@@ -105,22 +105,34 @@ function nextImage(){
 }
 
 function colorClass(class_defect){
-    switch (class_defect){
-        case 'Cracking':
-            return '008080'
-        case 'Rutting':
-            return '800000'
-        case 'Pothole':
-            return '008000'
-        case 'ManholeCover':
-          return '808000'
-        case 'EdgeDeterioration':
-          return '800080'   
-        case 'Gully':
-          return '000080'    
-        default:
-            return '000000'
-    }
+  switch (class_defect){
+      case 'KerbDeterioration':
+          return 'cfcf38'
+      case 'Rutting':
+          return 'fa3253'
+      case 'Pothole':
+          return 'b83df5'
+      case 'ManholeCover':
+        return 'b25050'
+      case 'EdgeDeterioration':
+        return '21a84d'   
+      case 'Gully':
+        return '2a7dd1'
+      case 'LooseStones':
+        return '000000'    
+      case 'DefectiveSurfaceDressing':
+        return '3d3df5'
+      case 'JointDefectiveness':
+        return '33e6ff'
+      case 'ReflectionCracking':
+        return 'ffcc33'
+      case 'Settlement':
+        return 'ff00cc'
+      case 'SurfaceDeterioration':
+        return 'aeb8b6'                                                                                                                    
+      default:
+        return 'ffffff'
+  }
 }
 
 function exitFunction(){
@@ -336,7 +348,9 @@ function request() {
 
 function show() {
 
-  document.getElementById("instructions_bt").innerHTML = "Hide instructions"
+  document.getElementById("instructions_bt").remove()
+
+  $('<td id = "td_instructions"><button id = "instructions_bt" onclick="hide()" type="button">Hide instructions</button></td>').appendTo($tr_menu)
 
   var $instructionPopUp = document.getElementById("instructionPopUp");
 
@@ -346,7 +360,9 @@ function show() {
 
 function hide(id) {
 
-  document.getElementById("instructions_bt").innerHTML = "Show instructions"
+  document.getElementById("instructions_bt").remove()
+
+  $('<td id = "td_instructions"><button id = "instructions_bt" onclick="show()" type="button">Show instructions</button></td>').appendTo($tr_menu)
 
   if (document.body.contains(document.getElementById('instruction_table'))) {
 

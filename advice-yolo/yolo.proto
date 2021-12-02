@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+message Image {
+    bytes image_data = 1;
+}
+
+message ObjDetected {
+    int32 obj = 1;
+    float x = 2;
+    float y = 3;
+    float w = 4;
+    float h = 5;
+    float conf = 6;
+}
+
+message PredictionData {
+    repeated ObjDetected data = 1;
+}
+
+service YOLO {
+    rpc Detect (Image) returns (PredictionData);
+}

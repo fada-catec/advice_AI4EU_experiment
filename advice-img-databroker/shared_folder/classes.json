@@ -1,0 +1,8 @@
+{
+    "Rutting": 0, 
+    "Pothole": 1, 
+    "ManholeCover": 2, 
+    "Gully": 3, 
+    "EdgeDeterioration": 4, 
+    "Cracking": 5
+}

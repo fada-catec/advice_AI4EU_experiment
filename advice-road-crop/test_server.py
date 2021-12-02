@@ -28,11 +28,11 @@ with open('./imgs/test_img.jpg', 'rb') as fp:
 
 img_cropped = stub.RoadCrop(request)
 
-img_cropped = Image.open(io.BytesIO(img_cropped.image_data)).convert('RGB')
-img_cropped.show()
-input()
-
-# print('status of response:', grpc.StatusCode.OK.value)
+print('status of response:', grpc.StatusCode.OK.value)
 # print('status of response:', grpc.StatusCode.name)
 # for i in grpc.StatusCode:
 #     print(i, i.value)
+
+img_cropped = Image.open(io.BytesIO(img_cropped.image_data)).convert('RGB')
+img_cropped.show()
+input()

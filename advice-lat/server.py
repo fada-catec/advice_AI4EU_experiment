@@ -1,3 +1,4 @@
+from io import IncrementalNewlineDecoder
 from typing import Optional, List
 import os
 import logging
@@ -40,6 +41,8 @@ class LabelServicer(label_pb2_grpc.LabelServicer):
         return empty_msg
 
 
+shared_folder = os.getenv("SHARED_FOLDER_PATH")
+
 # create a grpc server :
 server = grpc.server(futures.ThreadPoolExecutor(max_workers=cpu_count()-2))
 
@@ -49,7 +52,9 @@ server.add_insecure_port("[::]:{}".format(PORT))
 server.start()
 
 def getClasses(file_name):
-    path = os.path.join(os.getcwd(), file_name)
+
+    path = os.path.join(shared_folder, file_name) #for platform
+    # path = os.path.join(os.getcwd(), file_name)
 
     with open(path) as f:
         classes = json.load(f)
@@ -86,11 +91,11 @@ def serve_css(request: fastapi.Request):
 @app.put('/save_result', response_model=None)
 def save_result(filename:str, result: str) -> None:
 
-    print(protobuf_to_js_queue.qsize()) #debug porpuse
-
-    classes_dict = getClasses(os.path.join(os.getcwd(), "shared_folder", "classes.json"))
+    # classes_dict = getClasses(os.path.join(os.getcwd(), "shared_folder", "classes.json"))
+    classes_dict = getClasses(os.path.join(shared_folder, "classes.json"))
     result = result.split(',')
-    save_path = os.path.join(os.getcwd(), "shared_folder", "new_labels", filename)
+    # save_path = os.path.join(os.getcwd(), "shared_folder", "new_labels", filename)
+    save_path = os.path.join(shared_folder, "new_labels", filename)
     label_string=''
 
     if result[0] != '':
@@ -119,8 +124,10 @@ def update_filename():
 
     global index
 
-    labels_path = os.path.join(os.getcwd(), 'shared_folder', 'orig_labels')
-    img_path = os.path.join(os.getcwd(), 'shared_folder', 'img')
+    labels_path = os.path.join(shared_folder, 'orig_labels')
+    # labels_path = os.path.join(os.getcwd(), 'shared_folder', 'orig_labels')
+    img_path = os.path.join(shared_folder, 'img')
+    # img_path = os.path.join(os.getcwd(), 'shared_folder', 'img')
 
     labelspath = [os.path.join(labels_path, x) for x in os.listdir(labels_path) if x[-3:] == "txt"]
 
@@ -153,7 +160,8 @@ def request(request: fastapi.Request):
         index+=1
 
         #Get needed parameters
-        classes_dict = getClasses(os.path.join(os.getcwd(), "shared_folder", "classes.json"))
+        # classes_dict = getClasses(os.path.join(os.getcwd(), "shared_folder", "classes.json"))
+        classes_dict = getClasses(os.path.join(shared_folder, "classes.json"))
         global img_shape
 
         #Get image
@@ -191,6 +199,7 @@ def request(request: fastapi.Request):
         detection_data_get = protobuf_to_js_queue.get()
 
         for i in detection_data_get:
+
             defect = [keys[i.obj], round(i.x*img_shape[1],2), round(i.y*img_shape[0],2), round(i.w*img_shape[1],2), round(i.h*img_shape[0],2), round(i.conf,2)]
             ret.append(defect)
 

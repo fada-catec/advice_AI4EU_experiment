@@ -21,8 +21,6 @@ RUN python3 -m pip install pytest
 RUN python3 -m pip install numpy
 RUN python3 -m pip install Pillow
 
-
-
 WORKDIR /
 COPY ./requirements.txt /requirements.txt
 RUN pip3 install -r requirements.txt
@@ -35,11 +33,10 @@ COPY ./imgs/test_img.jpg ./imgs/
 # RUN mkdir /src
 # COPY ./src/ ./src/ 
 
-# COPY LICENSE prepro.proto server.py  ./
 COPY . /
 
 RUN python3 -m grpc_tools.protoc --python_out=. --proto_path=. --grpc_python_out=. *.proto
-# RUN python3 -m grpc_tools.protoc -I. --python_out=. --grpc_python_out=. *.proto
 
 ENTRYPOINT [ "python3","-u","server.py" ]
 # CMD python3 csv_server.py
+# ENTRYPOINT ["/bin/bash", "-c", "--"]

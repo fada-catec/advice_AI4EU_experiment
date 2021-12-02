@@ -2,6 +2,7 @@ import grpc
 from random import randint
 from timeit import default_timer as timer
 import os
+from tqdm import tqdm
 
 # import the generated classes
 import label_pb2
@@ -20,7 +21,7 @@ end_ch = timer()
 labels_path = os.path.join(os.getcwd(), 'test_predicted_labels')
 labelspath = [os.path.join(labels_path, x) for x in os.listdir(labels_path) if x[-3:] == "txt"]
 
-for l_path in labelspath:
+for l_path in tqdm(labelspath):
     request = label_pb2.PredictionData()
     detection_data = []
 
@@ -29,7 +30,7 @@ for l_path in labelspath:
         for line in lines:
             detection_data_line = line.split(' ')
             detection_data.append(detection_data_line)
-            
+
     for i in range(len(detection_data)):
 
         data_obj = label_pb2.ObjDetected()
@@ -43,9 +44,9 @@ for l_path in labelspath:
 
         request.data.append(data_obj)
 
-    print(request)
+    # print(request)
 
     prediction = stub.Get(request)
 
-    print(prediction)
+    # print(prediction)
     # input()
