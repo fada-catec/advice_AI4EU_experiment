@@ -4,8 +4,6 @@ ADVICE: AI-baseD predictiVe road maIntenanCE
 
 ## Local Deployment Cheatsheet
 
-install grpcio-tools
-
 1. Install docker
 
 2. Clone this repository and move to "local" branch
