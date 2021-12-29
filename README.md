@@ -14,9 +14,9 @@ install grpcio-tools
 
 4. Copy labels to __shared_folder/orig_labels__ (YOLO format)
 
-5. Move to orchestrator directory
+5. Run "./start.sh" or "./start.sh -r" to include semantic segmentation node. Run this command twice if it is the first time you pull the docker images 
 
-6. Run "./start.sh" or "./start.sh -r" to include semantic segmentation node. Run this command twice if it is the first time you pull the docker images 
+6. Move to orchestrator directory
 
 7. Install [grpcio-tools](https://pypi.org/project/grpcio-tools/) python module 
 
