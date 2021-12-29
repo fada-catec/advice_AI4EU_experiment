@@ -4,9 +4,11 @@ ADVICE: AI-baseD predictiVe road maIntenanCE
 
 ## Local Deployment Cheatsheet
 
+install grpcio-tools
+
 1. Install docker
 
-2. Clone this repository
+2. Clone this repository and move to "local" branch
 
 3. Copy images to __shared_folder/img__ (1280x720 size)
 
@@ -14,15 +16,17 @@ ADVICE: AI-baseD predictiVe road maIntenanCE
 
 5. Move to orchestrator directory
 
-6. Run "./start.sh" or "./start.sh -r" to include semantic segmentation node
+6. Run "./start.sh" or "./start.sh -r" to include semantic segmentation node. Run this command twice if it is the first time you pull the docker images 
 
-7. Run "python orchestrator.py"
+7. Install [grpcio-tools](https://pypi.org/project/grpcio-tools/) python module 
 
-8. Go to "https://0.0.0.0:8004"
+8. Run "python orchestrator.py"
 
-9. Follow the LAT instructions
+9. Go to "http://localhost:8004"
 
-10. New labels will be placed in __shared_folder/new_labels__
+10. Follow the LAT instructions
+
+11. New labels will be placed in __shared_folder/new_labels__
 
 ## Acknowledgement
 
