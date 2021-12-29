@@ -1,6 +1,0 @@
-classes= 12
-train  = /home/catec/Documents/darknet/build/darknet/x64/data/train6.txt
-valid  = /home/catec/Documents/darknet/build/darknet/x64/data/train6_valid_15percent.txt
-names = /home/catec/Documents/darknet/build/darknet/x64/data/obj.names
-backup = /home/catec/Documents/darknet/backup/
-

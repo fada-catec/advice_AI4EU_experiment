@@ -13,8 +13,8 @@ import prepro_pb2_grpc
 
 import roadnet_test
 
-PORT = 8061
- 
+PORT = 8001
+
 class ImagePreProcessServicer(prepro_pb2_grpc.ImagePreProcessServicer):
     
     def __init__(self):

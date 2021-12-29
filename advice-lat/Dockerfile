@@ -1,6 +1,8 @@
 # debian with Python preinstalled
 FROM python:3.7-slim-buster
 
+LABEL maintainer=arodriguez@catec.aero
+
 # copy dependency information
 COPY requirements.txt /
 
@@ -13,18 +15,11 @@ RUN /usr/local/bin/python -m pip install --upgrade pip\
 # copy sources
 RUN mkdir /app
 RUN mkdir /app/templates
-RUN mkdir /app/shared_folder
-RUN mkdir /app/shared_folder/img
-RUN mkdir /app/shared_folder/orig_labels
-RUN mkdir /app/shared_folder/new_labels
 RUN mkdir /app/res
 
 COPY gui.css gui.js label.proto server.py /app/
 COPY templates/* /app/templates/
 COPY res/* /app/res/
-COPY shared_folder/img/* /app/shared_folder/img/
-COPY shared_folder/orig_labels/* /app/shared_folder/orig_labels/
-COPY shared_folder/* /app/shared_folder/
 
 # adhere to container specification by also providing these two files
 COPY label.proto /model.proto

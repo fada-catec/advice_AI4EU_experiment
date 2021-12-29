@@ -11,7 +11,7 @@ import prepro_pb2_grpc
 from google.protobuf import empty_pb2
 
 start_ch = timer()
-port_addr = 'localhost:8061'
+port_addr = 'localhost:8001'
 
 # open a gRPC channel
 channel = grpc.insecure_channel(port_addr)
@@ -23,7 +23,7 @@ end_ch = timer()
 
 request = prepro_pb2.Image()
 
-with open('./imgs/test_img.jpg', 'rb') as fp:
+with open('/home/arodriguez/advice-local-pipeline/shared_folder/img/1625852038620.jpg', 'rb') as fp:
     request.image_data = fp.read()
 
 img_cropped = stub.RoadCrop(request)

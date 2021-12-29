@@ -27,8 +27,8 @@ RUN pip3 install -r requirements.txt
 
 # RUN useradd app
 # USER app
-RUN mkdir /imgs
-COPY ./imgs/test_img.jpg ./imgs/
+# RUN mkdir /imgs
+# COPY ./imgs/test_img.jpg ./imgs/
 
 # RUN mkdir /src
 # COPY ./src/ ./src/ 

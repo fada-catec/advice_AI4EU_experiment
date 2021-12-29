@@ -14,12 +14,12 @@ RUN pip3 install -r requirements.txt
 
 # RUN useradd app
 # USER app
-RUN mkdir /img
-RUN mkdir /orig_labels
-COPY img/* /img/ 
-COPY orig_labels/* /orig_labels/ 
+# RUN mkdir /img
+# RUN mkdir /orig_labels
+# COPY img/* /img/ 
+# COPY orig_labels/* /orig_labels/ 
 
-COPY LICENSE databroker.proto server.py classes.json  ./
+COPY LICENSE databroker.proto server.py ./
 # COPY . /
 
 RUN python3 -m grpc_tools.protoc --python_out=. --proto_path=. --grpc_python_out=. *.proto

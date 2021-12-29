@@ -12,11 +12,28 @@ function start(){
   // $('<td id = "td_instructions"><button id = "instructions_bt" onmouseover="show()" onmouseout="hide()" type="button">Show instructions</button></td>').appendTo($tr_menu)
   $('<td id = "td_instructions"><button id = "instructions_bt" onclick="show()" type="button">Show instructions</button></td>').appendTo($tr_menu)
 
-  $legend = document.getElementById("legend");
-  $('<div class="legend-title">Legend</div><div class="legend-scale"><ul class="legend-labels"><li><span style="background:#cfcf38;"></span>KerbDeterioration</li><li><span style="background:#fa3253;"></span>Rutting</li><li><span style="background:#b83df5;"></span>Pothole</li><li><span style=background:#b25050;"></span>ManholeCover</li><li><span style="background:#21a84d;"></span>EdgeDeterioration</li><li><span style="background:#2a7dd1;"></span>Gully</li><li><span style="background:#000000;"></span>LooseStones</li></lu><br><lu><li><span style="background:#3d3df5;"></span>DefectiveSurfaceDressing</li><li><span style="background:#33e6ff;"></span>JointDefectiveness</li><li><span style="background:#ffcc33;"></span>ReflectionCracking</li><li><span style="background:#ff00cc;"></span>Settlement</li><li><span style="background:#aeb8b6;"></span>SurfaceDeterioration</li></ul>').appendTo($legend)
-
 
   saved_flag = true
+
+  request_classes().done(function(response){
+
+    classes_list = [];
+    
+    for(var cl in response[0]){
+      classes_list.push(cl)
+    }
+    color_list = response[1]
+
+    legend_str = ''
+
+    for(var cl in response[0]){
+      legend_str += '<li><span style="background:#'+color_list[classes_list.indexOf(cl)]+';"></span>'+cl+'</li>'
+    }
+
+    $legend = document.getElementById("legend");
+    $('<div class="legend-title">Legend</div><div class="legend-scale"><ul class="legend-labels">'+legend_str+'</ul>').appendTo($legend)
+  });
+
 
   nextImage()
 
@@ -104,35 +121,9 @@ function nextImage(){
   }
 }
 
-function colorClass(class_defect){
-  switch (class_defect){
-      case 'KerbDeterioration':
-          return 'cfcf38'
-      case 'Rutting':
-          return 'fa3253'
-      case 'Pothole':
-          return 'b83df5'
-      case 'ManholeCover':
-        return 'b25050'
-      case 'EdgeDeterioration':
-        return '21a84d'   
-      case 'Gully':
-        return '2a7dd1'
-      case 'LooseStones':
-        return '000000'    
-      case 'DefectiveSurfaceDressing':
-        return '3d3df5'
-      case 'JointDefectiveness':
-        return '33e6ff'
-      case 'ReflectionCracking':
-        return 'ffcc33'
-      case 'Settlement':
-        return 'ff00cc'
-      case 'SurfaceDeterioration':
-        return 'aeb8b6'                                                                                                                    
-      default:
-        return 'ffffff'
-  }
+function colorClass(class_detect){
+
+  return color_list[classes_list.indexOf(class_detect)]
 }
 
 function exitFunction(){
@@ -339,6 +330,17 @@ function request() {
   return $.ajax({
     type: "GET",
     url: 'request',
+    success: function(result) {
+    },
+    failure: function(errMsg){
+    }
+  });
+}
+
+function request_classes() {
+  return $.ajax({
+    type: "GET",
+    url: 'request_classes',
     success: function(result) {
     },
     failure: function(errMsg){

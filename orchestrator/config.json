@@ -1,0 +1,6 @@
+{
+    "broker-grpcport": 8000,
+    "roi-grpcport": 8001,
+    "yolo-grpcport": 8002,
+    "lat-grpcport": 8003
+}

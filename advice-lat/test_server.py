@@ -9,7 +9,7 @@ import label_pb2
 import label_pb2_grpc
 
 start_ch = timer()
-port_addr = 'localhost:8061'
+port_addr = 'localhost:8003'
 
 # open a gRPC channel
 channel = grpc.insecure_channel(port_addr)
@@ -18,7 +18,10 @@ channel = grpc.insecure_channel(port_addr)
 stub = label_pb2_grpc.LabelStub(channel)
 end_ch = timer()
 
-labels_path = os.path.join(os.getcwd(), 'test_predicted_labels')
+shared_folder = os.path.join('/home/arodriguez/advice-local-pipeline/shared_folder')
+
+labels_path = os.path.join(shared_folder, 'pred_labels')
+
 labelspath = [os.path.join(labels_path, x) for x in os.listdir(labels_path) if x[-3:] == "txt"]
 
 for l_path in tqdm(labelspath):

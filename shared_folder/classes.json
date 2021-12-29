@@ -1,0 +1,14 @@
+{
+    "Rutting": 0, 
+    "Pothole": 1, 
+    "ManholeCover": 2, 
+    "Gully": 3, 
+    "EdgeDeterioration": 4, 
+    "KerbDeterioration": 5,
+    "LooseStones": 6,
+    "DefectiveSurfaceDressing": 7,
+    "JointDefectiveness": 8,
+    "ReflectionCracking": 9,
+    "Settlement": 10,
+    "SurfaceDeterioration": 11
+}

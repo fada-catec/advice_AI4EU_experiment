@@ -1,0 +1,47 @@
+// This file is for the manually written orchestrator. It is not required on the AI4EU Experiments platform.
+
+syntax = "proto3";
+
+// Databroker
+
+message Image {
+    bytes image_data = 1;
+}
+
+message Empty {
+}
+
+service ImageSource {
+    rpc Get (Empty) returns (Image);
+}
+
+// Additional ROI
+
+service ImagePreProcess {
+    rpc RoadCrop (Image) returns (Image);
+}
+
+// Additional YOLO
+
+message ObjDetected {
+    int32 obj = 1;
+    float x = 2;
+    float y = 3;
+    float w = 4;
+    float h = 5;
+    float conf = 6;
+}
+
+message PredictionData {
+    repeated ObjDetected data = 1;
+}
+
+service YOLO {
+    rpc Detect (Image) returns (PredictionData);
+}
+
+// Additional LAT
+
+service Label {
+    rpc Get (PredictionData) returns (Empty);
+}

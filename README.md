@@ -2,6 +2,28 @@
 
 ADVICE: AI-baseD predictiVe road maIntenanCE 
 
+## Local Deployment Cheatsheet
+
+1. Install docker
+
+2. Clone this repository
+
+3. Copy images to __shared_folder/img__ (1280x720 size)
+
+4. Copy labels to __shared_folder/orig_labels__ (YOLO format)
+
+5. Move to orchestrator directory
+
+6. Run "./start.sh" or "./start.sh -r" to include semantic segmentation node
+
+7. Run "python orchestrator.py"
+
+8. Go to "https://0.0.0.0:8004"
+
+9. Follow the LAT instructions
+
+10. New labels will be placed in __shared_folder/new_labels__
+
 ## Acknowledgement
 
 ***
