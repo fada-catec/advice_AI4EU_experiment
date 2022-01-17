@@ -45,6 +45,7 @@ def draw_bounding_boxes(image, boxes, confidences, classIDs, idxs, colors, label
 
             # draw the bounding box and label on the image
             color = [int(c) for c in colors[classIDs[i]]]
+
             cv2.rectangle(image, (x, y), (x + w, y + h), color, 2)
             text = "{}: {:.2f}".format(labels[classIDs[i]], confidences[i])
 
@@ -70,19 +71,24 @@ def make_prediction(net, layer_names, labels, image, confidence, threshold):
 
     return boxes, confidences, classIDs, idxs
 
-def norm(out_list, lab_dict, sh):
+def norm(out_list, lab_dict, sh, orig_height):
 
     norm_list = []
+
+    H = orig_height-sh[0]
 
     for i in out_list:
         i[0] = lab_dict[i[0]]
         i[1] /= sh[1]
-        i[2] /= sh[0]
+        if H != 0:
+            i[2] += H
+        i[2] /= orig_height
         i[3] /= sh[1]
-        i[4] /= sh[0]
+        i[4] /= orig_height
         i[5] = i[5]
         
         norm_list.append(i)
+
     return norm_list
 
 def getClasses(file_name):
@@ -93,8 +99,15 @@ def getClasses(file_name):
 
     return classes
 
-def main(img): ###descomentar para protobuf
+ind_img = 0
+
+def main(img, no_crop_img_height): ###descomentar para protobuf
 # def main():
+
+    global ind_img
+
+
+    shared_folder = os.getenv("SHARED_FOLDER_PATH")
 
     # Get optional arguments
     # parser = argparse.ArgumentParser()
@@ -110,15 +123,12 @@ def main(img): ###descomentar para protobuf
 
     # Parameters
     show = 0
-    confidence = 0.2
+    confidence = 0.20 
     threshold = 0.3
 
-    # Path to files
-    path = os.getcwd()
-
-    config = os.path.join(path, "config", "yolo-obj.cfg")
-    weights = os.path.join(path, "config", "yolo-obj_best.weights")
-    names = os.path.join(path, "config", "classes.json")
+    config = os.path.join(os.getcwd(), "config", "yolo-obj.cfg")
+    weights = os.path.join(os.getcwd(), "config", "yolo-obj_best.weights")
+    names = os.path.join(shared_folder, "classes.json")
     # image_path = os.path.join(path, "imgs", "1625758239020.jpg") ###comentar para protobuf
 
     # Get the labels
@@ -129,14 +139,19 @@ def main(img): ###descomentar para protobuf
         labels.append(i)
 
     # Create a list of colors for the labels
-    colors = np.random.randint(0, 255, size=(len(labels), 3), dtype='uint8')
+    # colors = np.random.randint(0, 255, size=(len(labels), 3), dtype='uint8')
+    colors = [[ 87,121,26], [104,  91, 244], [243, 163, 249], [240, 234, 251], [123, 127,  58], [127,  40, 180], [240, 130, 168], [ 93, 166, 111], [214, 125, 247], [177, 152, 151], [152, 3,  55], [154, 139, 193]]
 
     # Load weights using OpenCV
     net = cv2.dnn.readNetFromDarknet(config, weights)
 
     # Get the ouput layer names
     layer_names = net.getLayerNames()
-    layer_names = [layer_names[i[0] - 1] for i in net.getUnconnectedOutLayers()]
+
+    try:
+        layer_names = [layer_names[i[0] - 1] for i in net.getUnconnectedOutLayers()]
+    except IndexError:
+        layer_names = [layer_names[i - 1] for i in net.getUnconnectedOutLayers()]
 
     # image = cv2.imread(image_path) ###comentar para protobuf
     image = img ###descomentar para protobuf
@@ -149,10 +164,12 @@ def main(img): ###descomentar para protobuf
 
     # show the output image
     if show == 1:
-        cv2.imshow('YOLO Object Detection', image)
-        cv2.waitKey(0)
+        # cv2.imshow('YOLO Object Detection', image)
+        filename = 'img_'+str(ind_img)+'.jpg'
+        cv2.imwrite(shared_folder+'/pred_img/'+filename, image)
+        # cv2.waitKey(1)
+        ind_img+=1
 
-
-    return norm(output_list, labels_dict, image.shape)
+    return norm(output_list, labels_dict, image.shape, no_crop_img_height)
 
 # print(main()) ###comentar para protobuf

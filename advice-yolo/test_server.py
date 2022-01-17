@@ -11,7 +11,7 @@ import yolo_pb2
 import yolo_pb2_grpc
 
 start_ch = timer()
-port_addr = 'localhost:8061'
+port_addr = 'localhost:8002'
 
 # open a gRPC channel
 channel = grpc.insecure_channel(port_addr)
@@ -22,27 +22,31 @@ end_ch = timer()
 
 request = yolo_pb2.Image()
 
-labels_path = os.path.join(os.getcwd(), 'imgs')
-predictions_path = os.path.join(os.getcwd(), 'pred_labels')
+shared_folder = os.path.join('/home/arodriguez/advice-local-pipeline/shared_folder')
 
-img_names = os.listdir(labels_path)
+img_path = os.path.join(shared_folder, 'img')
+predictions_path = os.path.join(shared_folder, 'pred_labels')
 
-for x in tqdm(img_names):
+img_names = os.listdir(img_path)
 
-    with open(os.path.join(labels_path, x), 'rb') as fp:
+sorted_img_names = sorted(img_names)
+
+for x in tqdm(sorted_img_names):
+
+    with open(os.path.join(img_path, x), 'rb') as fp:
         request.image_data = fp.read()
 
     prediction = stub.Detect(request)
 
     if (len(prediction.data) == 0):
         yolo_str = ''
+        with open(os.path.join(predictions_path, x.replace('jpg','txt')), 'a+') as f:
+            f.write(yolo_str)
     else:
         for data in prediction.data:
             yolo_str = str(data.obj)+' '+str(data.x)+' '+str(data.y)+' '+str(data.w)+' '+str(data.h)+' '+str(data.conf)+'\n'
-
-    with open(os.path.join(predictions_path, x.replace('jpg','txt')), 'a+') as f:
-        f.write(yolo_str)
-
+            with open(os.path.join(predictions_path, x.replace('jpg','txt')), 'a+') as f:
+                f.write(yolo_str)
 
 # print(prediction)
 # input()

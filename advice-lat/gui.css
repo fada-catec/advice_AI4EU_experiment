@@ -250,6 +250,9 @@ color: #FFFFFF;
   padding: 0;
   float: center;
   list-style: none;
+  width: 60%;
+  margin-left: auto;
+  margin-right: auto;
   }
 .my-legend .legend-scale ul li {
   display: inline-block;

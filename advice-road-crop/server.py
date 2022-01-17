@@ -14,7 +14,7 @@ import prepro_pb2_grpc
 import roadnet_test
 
 PORT = 8061
- 
+
 class ImagePreProcessServicer(prepro_pb2_grpc.ImagePreProcessServicer):
     
     def __init__(self):
@@ -31,6 +31,7 @@ class ImagePreProcessServicer(prepro_pb2_grpc.ImagePreProcessServicer):
     def RoadCrop(self, request, context):
         
         image_bytes = request.image_data
+
         img = Image.open(io.BytesIO(image_bytes)).convert('RGB')
 
         with self.graph.as_default():

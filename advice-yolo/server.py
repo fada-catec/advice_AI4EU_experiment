@@ -18,13 +18,15 @@ PORT = 8061
 class YOLOServicer(yolo_pb2_grpc.YOLOServicer):
 
     def Detect(self, request: yolo_pb2.Image, context):
+
+        no_crop_img_height = 720
         
         image_bytes = request.image_data
         img = Image.open(io.BytesIO(image_bytes)).convert('RGB')
 
         imgcv = cv2.cvtColor(np.asarray(img),cv2.COLOR_RGB2BGR)
 
-        detection_data = detection.main(imgcv)
+        detection_data = detection.main(imgcv, no_crop_img_height)
 
         data = yolo_pb2.PredictionData()
 

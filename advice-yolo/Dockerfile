@@ -1,6 +1,6 @@
 FROM ubuntu:20.04
 
-LABEL maintainer="arodriguez@catec.aero"
+LABEL maintainer=arodriguez@catec.aero
 
 ARG DEBIAN_FRONTEND=noninteractiva
 ENV TZ=Europe/Moscow
@@ -15,7 +15,6 @@ COPY ./requirements.txt /requirements.txt
 RUN pip3 install -r requirements.txt
 
 RUN mkdir /config
-COPY ./config/classes.json ./config/
 COPY ./config/yolo-obj_best.weights ./config/
 COPY ./config/yolo-obj.cfg ./config/
 

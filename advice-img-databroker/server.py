@@ -10,29 +10,13 @@ import databroker_pb2_grpc
 
 from shutil import copy, copytree, rmtree
 
-import os
-
 PORT = 8061
 
 shared_folder = os.getenv("SHARED_FOLDER_PATH")
-# shared_folder = os.path.join(os.getcwd(), 'shared_folder') #for debug
-
-img_path = os.path.join(os.getcwd(), 'img')
-label_path = os.path.join(os.getcwd(), 'orig_labels')
-classes_path = os.path.join(os.getcwd(), 'classes.json')
-
-if os.path.isdir(shared_folder+'/img'):
-    rmtree(shared_folder+'/img')
-if os.path.isdir(shared_folder+'/orig_labels'):
-    rmtree(shared_folder+'/orig_labels')
-
-copytree(img_path, shared_folder+'/img')
-copytree(label_path, shared_folder+'/orig_labels')
-copy(classes_path, shared_folder)
 
 i = 0
 imgspath = [os.path.join(shared_folder+'/img', x) for x in os.listdir(shared_folder+'/img') if x[-3:] == "jpg"]
-
+imgspath = sorted(imgspath)
 
 class ImageSourceServicer(databroker_pb2_grpc.ImageSourceServicer):
 

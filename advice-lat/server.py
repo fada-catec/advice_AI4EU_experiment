@@ -12,9 +12,12 @@ from multiprocessing import cpu_count
 import base64
 import cv2
 import queue
+import random
 
 import label_pb2
 import label_pb2_grpc
+
+PORT = 8061
 
 index = 0
 logger  = logging.getLogger(__name__)
@@ -24,7 +27,6 @@ app = fastapi.FastAPI(title='LabelingServer', debug=True)
 app.logger = logger
 templates = fastapi.templating.Jinja2Templates(directory='templates')
 
-PORT = 8061
 
 protobuf_to_js_queue = queue.Queue()
 
@@ -40,7 +42,6 @@ class LabelServicer(label_pb2_grpc.LabelServicer):
         empty_msg = label_pb2.Empty()
         return empty_msg
 
-
 shared_folder = os.getenv("SHARED_FOLDER_PATH")
 
 # create a grpc server :
@@ -53,8 +54,7 @@ server.start()
 
 def getClasses(file_name):
 
-    path = os.path.join(shared_folder, file_name) #for platform
-    # path = os.path.join(os.getcwd(), file_name)
+    path = os.path.join(shared_folder, file_name)
 
     with open(path) as f:
         classes = json.load(f)
@@ -86,15 +86,13 @@ def serve_js(request: fastapi.Request):
 
 @app.get('/gui.css')
 def serve_css(request: fastapi.Request):
-   return fastapi.responses.FileResponse("gui.css", headers={'Cache-Control': 'no-cache'})
+    return fastapi.responses.FileResponse("gui.css", headers={'Cache-Control': 'no-cache'})
 
 @app.put('/save_result', response_model=None)
 def save_result(filename:str, result: str) -> None:
 
-    # classes_dict = getClasses(os.path.join(os.getcwd(), "shared_folder", "classes.json"))
     classes_dict = getClasses(os.path.join(shared_folder, "classes.json"))
     result = result.split(',')
-    # save_path = os.path.join(os.getcwd(), "shared_folder", "new_labels", filename)
     save_path = os.path.join(shared_folder, "new_labels", filename)
     label_string=''
 
@@ -125,11 +123,10 @@ def update_filename():
     global index
 
     labels_path = os.path.join(shared_folder, 'orig_labels')
-    # labels_path = os.path.join(os.getcwd(), 'shared_folder', 'orig_labels')
     img_path = os.path.join(shared_folder, 'img')
-    # img_path = os.path.join(os.getcwd(), 'shared_folder', 'img')
 
     labelspath = [os.path.join(labels_path, x) for x in os.listdir(labels_path) if x[-3:] == "txt"]
+    labelspath = sorted(labelspath)
 
     if index <= len(labelspath)-1:
 
@@ -147,6 +144,16 @@ def update_filename():
 
     return labelspath[index], imgpath, len(labelspath)
 
+@app.get('/request_classes')
+def request_classes(request: fastapi.Request):
+    classes_dict = getClasses(os.path.join(shared_folder, "classes.json"))
+    color_list = []
+    for cl in classes_dict:
+        color = [''.join([random.choice('ABCDEF0123456789') for i in range(6)])]
+        color_list.append(color[0])
+
+    return classes_dict, color_list
+
 @app.get('/request')
 def request(request: fastapi.Request):
 
@@ -156,11 +163,9 @@ def request(request: fastapi.Request):
     filespath = update_filename()
     if filespath != False:
 
-        print(filespath)
         index+=1
 
         #Get needed parameters
-        # classes_dict = getClasses(os.path.join(os.getcwd(), "shared_folder", "classes.json"))
         classes_dict = getClasses(os.path.join(shared_folder, "classes.json"))
         global img_shape
 
