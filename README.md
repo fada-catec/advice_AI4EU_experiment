@@ -42,6 +42,8 @@ Once the pipeline has been built on the AI4EU platform and exported to local:
 
           python3 orchestrator_client/orchestrator_client.py -e 192.168.49.2:30004 -b .
 
+(Note: For deployment on local machine by source code please visit the ["local" branch](https://github.com/fada-catec/advice_AI4EU_experiment/tree/local))
+
 ## Acknowledgement
 
 ***
